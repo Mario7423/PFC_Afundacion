@@ -13,6 +13,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -23,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView textViewFromCV;
     private Button button;
     private Context context = this;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
         checkBox = findViewById(R.id.checkbox);
         textViewFromCV = findViewById(R.id.textViewFromCheckBox);
         button = findViewById(R.id.button);
+
+        requestQueue = Volley.newRequestQueue(this);
 
         SpannableString underlinedText = new SpannableString(textViewFromCV.getText().toString());
         underlinedText.setSpan(new UnderlineSpan(), 0, underlinedText.length(), 0);
@@ -86,7 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(goodEmail && goodPassword && goodNickname && checkBox.isChecked()){
 
-                    Toast.makeText(context, "Registro completado", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "Registro completado", Toast.LENGTH_LONG).show();
+                    registeUser();
 
                 }
 
@@ -104,5 +116,53 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void registeUser(){
+
+        JSONObject requestBody = new JSONObject();
+
+        try{
+
+            requestBody.put("email", email.getText().toString());
+            requestBody.put("password", password.getText().toString());
+            requestBody.put("nickname", nickname.getText().toString());
+
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object response) {
+
+                Toast.makeText(context, "Registro realizado con éxito", Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(context, MainScreen.class);
+//                startActivity(intent);
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                if(error.networkResponse == null){
+
+                    Toast.makeText(context, "Error de conexión con el servidor", Toast.LENGTH_LONG).show();
+
+                }else{
+
+                    int serverResponse = error.networkResponse.statusCode;
+                    Toast.makeText(context, "Estado de respuesta: "+ serverResponse, Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        };
+
+        //JsonObjectRequest request = new JsonObjectRequest(); //Aquí se crea una request que se envía a un método común para formarlas
+        //requestQueue.add(request);
+
     }
 }
