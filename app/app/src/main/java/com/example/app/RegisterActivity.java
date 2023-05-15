@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -32,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button button;
     private Context context = this;
     private RequestQueue requestQueue;
+    private final String urlMockapi = "https://64623eb77a9eead6faca2f47.mockapi.io";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,18 +135,20 @@ public class RegisterActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Response.Listener listener = new Response.Listener() {
-            @Override
-            public void onResponse(Object response) {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                urlMockapi + "/users",
+                requestBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
-                Toast.makeText(context, "Registro realizado con éxito", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(context, MainScreen.class);
-//                startActivity(intent);
+                        Toast.makeText(context, "Registro realizado con éxito", Toast.LENGTH_LONG).show();
+//                      Intent intent = new Intent(context, MainScreen.class);
+//                      startActivity(intent);
 
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -159,10 +164,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
             }
-        };
+        }
 
-        //JsonObjectRequest request = new JsonObjectRequest(); //Aquí se crea una request que se envía a un método común para formarlas
-        //requestQueue.add(request);
+        );
+
+        requestQueue.add(request);
 
     }
 }
