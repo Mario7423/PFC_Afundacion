@@ -36,6 +36,8 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".RegisterActivity"
+            android:exported="true">
             android:name=".FirstScreen"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
