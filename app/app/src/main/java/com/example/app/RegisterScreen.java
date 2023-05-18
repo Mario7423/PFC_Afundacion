@@ -3,7 +3,6 @@ package com.example.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -24,7 +23,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterScreen extends AppCompatActivity {
 
     private EditText email;
     private EditText password;
@@ -35,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Context context = this;
     private RequestQueue requestQueue;
     private final String urlMockapi = "https://64623eb77a9eead6faca2f47.mockapi.io";
+    private final String url = "http://127.0.0.1:8000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                urlMockapi + "/users",
+                url + "v1/register",
                 requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -168,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         );
 
-        requestQueue.add(request);
+        this.requestQueue.add(request);
 
     }
 }

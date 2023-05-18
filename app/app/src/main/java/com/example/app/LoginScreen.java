@@ -30,6 +30,7 @@ public class LoginScreen extends AppCompatActivity {
     private Context context = this;
     private RequestQueue requestQueue;
     private final String urlMockapi = "https://64623eb77a9eead6faca2f47.mockapi.io";
+    private final String url = "http://127.0.0.1:8000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,24 +73,36 @@ public class LoginScreen extends AppCompatActivity {
 
     private void loginUser(){
 
+        JSONObject object = new JSONObject();
+
+        try {
+
+            object.put("email", email.getText().toString());
+            object.put("password", password.getText().toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                urlMockapi + "/users?email=" + email.getText().toString(),
-                null,
+                url + "v1/login",
+                object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        String receivedToken;
+                        String receivedToken, receivedEmail;
                         try {
-                            receivedToken = response.getString("sessionToken");
+                            receivedEmail = response.getString("email");
+                            receivedToken = response.getString("token");
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                         Toast.makeText(context, "Token: " + receivedToken, Toast.LENGTH_SHORT).show();
                         SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("VALID_EMAIL", email.getText().toString());
+                        editor.putString("VALID_EMAIL", receivedEmail);
                         editor.putString("VALID_TOKEN", receivedToken);
                         editor.commit();
 //                        Intent intent = new Intent(context, MainScreen.class);

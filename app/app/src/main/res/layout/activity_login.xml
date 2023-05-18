@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img"
+    android:background="@drawable/reece_james"
     tools:context=".LoginScreen">
 
     <EditText
@@ -18,6 +18,7 @@
         android:inputType="textEmailAddress"
         android:background="@color/cardview_shadow_end_color"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:layout_marginTop="500dp"/>
 
     <EditText
@@ -31,6 +32,7 @@
         android:hint="Introduce tu contraseña"
         android:background="@color/cardview_shadow_end_color"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:inputType="textPassword"/>
 
     <Button
