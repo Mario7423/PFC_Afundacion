@@ -67,7 +67,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
 
             case R.id.nav_logout:
-                SharedPreferences.Editor editor = getSharedPreferences("VALID_TOKEN", MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE).edit();
                 editor.clear().apply();
                 finish();
                 Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();

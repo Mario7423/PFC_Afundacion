@@ -31,7 +31,7 @@ public class FirstScreen extends AppCompatActivity {
 
                 Intent intent = new Intent(context, LoginScreen.class); // Inicia la pantalla de inicio de sesión
                 startActivity(intent);
-                Toast.makeText(context, "Esto inicia la pantalla de login", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Esto inicia la pantalla de login", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -42,7 +42,7 @@ public class FirstScreen extends AppCompatActivity {
 
                 Intent intent = new Intent(context, RegisterScreen.class);
                 startActivity(intent);
-                Toast.makeText(context, "Esto inicia la pantalla de registro", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Esto inicia la pantalla de registro", Toast.LENGTH_LONG).show();
 
             }
         });
