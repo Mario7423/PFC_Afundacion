@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,6 +23,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        SharedPreferences preferences = getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,7 +67,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 break;
 
             case R.id.nav_logout:
-                Toast.makeText(this, "Esto cerrará tu sesión", Toast.LENGTH_SHORT).show();
+                SharedPreferences.Editor editor = getSharedPreferences("VALID_TOKEN", MODE_PRIVATE).edit();
+                editor.clear().apply();
+                finish();
+                Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, FirstScreen.class);
+                startActivity(intent);
                 break;
         }
 

@@ -34,7 +34,7 @@ public class RegisterScreen extends AppCompatActivity {
     private Context context = this;
     private RequestQueue requestQueue;
     private final String urlMockapi = "https://64623eb77a9eead6faca2f47.mockapi.io";
-    private final String url = "http://127.0.0.1:8000/";
+    private final String url = "http://10.0.2.2:8000/"; //"http://127.0.0.1:8000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

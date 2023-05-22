@@ -38,7 +38,7 @@ def registeUser(request):
         return JsonResponse({"error": "An user with this email already exists"}, status=409)
     return JsonResponse({"user_created": True},status=201)
 
-
+@csrf_exempt
 def loginUser(request):
     if request.method != 'POST':
         return JsonResponse({'error': 'HTTP method not supported'}, status=405)
@@ -57,7 +57,7 @@ def loginUser(request):
     except User.DoesNotExist:
         return JsonResponse({"error": "This user does not exist"}, status=404)
 
-    if bcrypt.checkpw(password.encode('utf8'), db_user.password.enconde('utf8')):
+    if bcrypt.checkpw(password.encode('utf8'), db_user.password.encode('utf8')):
         token = secrets.token_hex(100)
         db_user.token = token
         db_user.save()
