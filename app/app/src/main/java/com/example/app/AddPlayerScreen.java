@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class AddPlayerScreen extends AppCompatActivity {
 
-    private EditText name, age, number, image, nationality, team, nickname;
+    private EditText name, age, number, image, nationality, team, nickname, position;
     private Button button;
     private RequestQueue queue;
     private final String url = "http://10.0.2.2:8000/";
@@ -39,6 +39,7 @@ public class AddPlayerScreen extends AppCompatActivity {
         nationality = findViewById(R.id.nationality);
         team = findViewById(R.id.team);
         nickname = findViewById(R.id.nickname);
+        position = findViewById(R.id.position);
         button = findViewById(R.id.button);
 
         queue = Volley.newRequestQueue(this);
@@ -66,6 +67,7 @@ public class AddPlayerScreen extends AppCompatActivity {
             object.put("team", team.getText().toString());
             object.put("nationality", nationality.getText().toString());
             object.put("nickname", nickname.getText().toString());
+            object.put("position", position.getText().toString());
 
         } catch (JSONException e) {
             e.printStackTrace();

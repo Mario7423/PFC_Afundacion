@@ -16,4 +16,5 @@ class Player(models.Model):
     team = models.CharField(max_length=50, default='Sin equipo')
     nationality = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30, default='Sin apodo')
+    position = models.CharField(max_length=20, default='Centrocampista')
 
