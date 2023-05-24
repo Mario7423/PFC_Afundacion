@@ -4,7 +4,7 @@ import secrets
 import bcrypt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import User
+from .models import User, Player
 from django.db import IntegrityError
 
 
@@ -64,3 +64,25 @@ def loginUser(request):
         return JsonResponse({"email": email, "token": token}, status=201)
     else:
         return JsonResponse({"error": "This password is incorrect"}, status=400)
+
+
+@csrf_exempt
+def addPlayer(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'HTTP method not supported'}, status=405)
+
+    body = json.loads(request.body)
+    name = body.get('name')
+    age = body.get('age')
+    number = body.get('number')
+    image = body.get('image')
+    team = body.get('team')
+    nationality = body.get('nationality')
+    nickname = body.get('nickname')
+
+    if name is None or age is None or number is None or image is None or nationality is None or team is None or nickname is None:
+        return JsonResponse({'error': 'Missing parameter'}, status=400)
+
+    new_player = Player(name=name,age=age,number=number,image=image,team=team,nationality=nationality, nickname=nickname)
+    new_player.save()
+    return JsonResponse({'created new player': True}, status=201)

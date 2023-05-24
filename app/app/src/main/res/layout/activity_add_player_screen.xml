@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddPlayerScreen">
+
+   <EditText
+       android:id="@+id/name"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginTop="30dp"
+       android:hint="Name"/>
+
+   <EditText
+       android:id="@+id/age"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@id/name"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginTop="30dp"
+       android:hint="Age"/>
+
+   <EditText
+       android:id="@+id/number"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@id/age"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginTop="30dp"
+       android:hint="Number"/>
+
+   <EditText
+       android:id="@+id/image"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@id/number"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginTop="30dp"
+       android:hint="Image"/>
+
+   <EditText
+       android:id="@+id/team"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@id/image"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginTop="30dp"
+       android:hint="Team"/>
+
+   <EditText
+       android:id="@+id/nationality"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@id/team"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginTop="30dp"
+       android:hint="Nationality"/>
+
+   <EditText
+       android:id="@+id/nickname"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@id/nationality"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginTop="30dp"
+       android:hint="Nickname"/>
+
+   <Button
+       android:id="@+id/button"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@id/nickname"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginTop="40dp"
+       android:text="Submit"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
