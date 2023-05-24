@@ -22,5 +22,5 @@ urlpatterns = [
     path('v1/health', endpoints.server_status),
     path('v1/register', endpoints.registeUser),
     path('v1/login', endpoints.loginUser),
-    path('adm/add', endpoints.addPlayer)
+    path('v1/add', endpoints.addPlayer)
 ]

@@ -15,4 +15,5 @@ class Player(models.Model):
     image = models.CharField(blank=True,null=True, max_length=200)
     team = models.CharField(max_length=50, default='Sin equipo')
     nationality = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=30, default='Sin apodo')
 

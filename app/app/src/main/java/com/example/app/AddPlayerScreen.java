@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class AddPlayerScreen extends AppCompatActivity {
 
-    private EditText name, age, number, image, nationality, team;
+    private EditText name, age, number, image, nationality, team, nickname;
     private Button button;
     private RequestQueue queue;
     private final String url = "http://10.0.2.2:8000/";
@@ -38,6 +38,7 @@ public class AddPlayerScreen extends AppCompatActivity {
         image = findViewById(R.id.image);
         nationality = findViewById(R.id.nationality);
         team = findViewById(R.id.team);
+        nickname = findViewById(R.id.nickname);
         button = findViewById(R.id.button);
 
         queue = Volley.newRequestQueue(this);
@@ -64,6 +65,7 @@ public class AddPlayerScreen extends AppCompatActivity {
             object.put("image", image.getText().toString());
             object.put("team", team.getText().toString());
             object.put("nationality", nationality.getText().toString());
+            object.put("nickname", nickname.getText().toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -71,7 +73,7 @@ public class AddPlayerScreen extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                url+"adm/add",
+                url+"v1/add",
                 object,
                 new Response.Listener<JSONObject>() {
                     @Override

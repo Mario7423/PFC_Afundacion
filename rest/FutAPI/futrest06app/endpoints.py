@@ -78,10 +78,11 @@ def addPlayer(request):
     image = body.get('image')
     team = body.get('team')
     nationality = body.get('nationality')
+    nickname = body.get('nickname')
 
-    if name is None or age or number is None or image is None or nationality is None or team is None:
+    if name is None or age is None or number is None or image is None or nationality is None or team is None or nickname is None:
         return JsonResponse({'error': 'Missing parameter'}, status=400)
 
-    new_player = Player(name=name,age=age,number=number,image=image,team=team,nationality=nationality)
+    new_player = Player(name=name,age=age,number=number,image=image,team=team,nationality=nationality, nickname=nickname)
     new_player.save()
     return JsonResponse({'created new player': True}, status=201)
