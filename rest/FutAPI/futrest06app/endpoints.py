@@ -96,6 +96,6 @@ def getPlayers(request):
     rows = Player.objects.order_by('name')
     jsonArray = []
     for row in rows:
-        jsonArray.append(row.to_json)
+        jsonArray.append(row.to_json())
     return JsonResponse(jsonArray, safe=False, status=200)
 
