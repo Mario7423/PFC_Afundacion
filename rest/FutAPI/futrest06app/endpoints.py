@@ -87,3 +87,15 @@ def addPlayer(request):
     new_player = Player(name=name,age=age,number=number,image=image,team=team,nationality=nationality, nickname=nickname, position=position)
     new_player.save()
     return JsonResponse({'created new player': True}, status=201)
+
+@csrf_exempt
+def getPlayers(request):
+    if request.method != 'GET':
+        return JsonResponse({'error': 'HTTP method not supported'}, status=405)
+
+    rows = Player.objects.order_by('name')
+    jsonArray = []
+    for row in rows:
+        jsonArray.append(row.to_json)
+    return JsonResponse(jsonArray, safe=False, status=200)
+
