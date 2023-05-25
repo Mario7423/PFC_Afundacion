@@ -4,7 +4,7 @@ import secrets
 import bcrypt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import User, Player
+from .models import User, Player, Hints
 from django.db import IntegrityError
 
 
@@ -87,3 +87,39 @@ def addPlayer(request):
     new_player = Player(name=name,age=age,number=number,image=image,team=team,nationality=nationality, nickname=nickname, position=position)
     new_player.save()
     return JsonResponse({'created new player': True}, status=201)
+
+
+@csrf_exempt
+def addHint(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'HTTP method not supported'}, status=405)
+
+    body = json.loads(request.body)
+    hint1 = body.get('hint1')
+    hint2 = body.get('hint2')
+    hint3 = body.get('hint3')
+    hint4 = body.get('hint4')
+    hint5 = body.get('hint5')
+    solution = body.get('solution')
+
+    if hint1 is None or hint2 is None or hint3 is None or hint4 is None or hint5 is None or solution is None:
+        return JsonResponse({'error': 'Missing parameter'}, status=400)
+
+    new_hint = Hints(hint1=hint1,hint2=hint2,hint3=hint3,hint4=hint4,hint5=hint5,solution=solution)
+    new_hint.save()
+    return JsonResponse({'created new hint': True}, status=201)
+
+
+@csrf_exempt
+def getHints(request):
+    if request.method != 'GET':
+        return JsonResponse({'eror': 'HTTP method not supported'}, status=405)
+
+    rows = Hints.objects.all()
+
+    response = []
+
+    for row in rows:
+        response.append(row.to_json())
+
+    return JsonResponse(response,safe=False, status=201)

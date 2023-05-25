@@ -22,5 +22,7 @@ urlpatterns = [
     path('v1/health', endpoints.server_status),
     path('v1/register', endpoints.registeUser),
     path('v1/login', endpoints.loginUser),
-    path('v1/add', endpoints.addPlayer)
+    path('v1/add', endpoints.addPlayer),
+    path('v1/addHint', endpoints.addHint),
+    path('v1/getHints', endpoints.getHints)
 ]
