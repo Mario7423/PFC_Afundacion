@@ -13,13 +13,14 @@ import com.example.app.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder> {
 
 
-    ArrayList<Player> playersList;
+    private List<Player> playersList;
 
-    public PlayerAdapter(ArrayList<Player> playersList){
+    public PlayerAdapter(List<Player> playersList){
 
         this.playersList = playersList;
 
@@ -35,10 +36,8 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     @Override
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
 
-        holder.txt.setText(playersList.get(position).getNickname());
-        Picasso.get()
-                .load(playersList.get(position).getImage())
-                .into(holder.img);
+        Player player = playersList.get(position);
+        holder.bind(player);
 
     }
 
@@ -49,14 +48,21 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     public class PlayerViewHolder extends RecyclerView.ViewHolder{
 
-        TextView txt;
-        ImageView img;
+        TextView textView;
+        ImageView imageView;
 
         public PlayerViewHolder(View itemView){
 
             super(itemView);
-            txt = (TextView) itemView.findViewById(R.id.text);
-            img = (ImageView) itemView.findViewById(R.id.image);
+            textView = (TextView) itemView.findViewById(R.id.text);
+            imageView = (ImageView) itemView.findViewById(R.id.image);
+
+        }
+
+        public void bind(Player player){
+
+            textView.setText(player.getNickname());
+            Picasso.get().load(player.getImage()).into(imageView);
 
         }
 

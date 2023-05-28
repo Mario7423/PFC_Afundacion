@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,8 +43,10 @@ public class PlayersFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    RecyclerView recyclerView;
-    ArrayList<Player> playersList;
+    private List<Player> playersList;
+    private RecyclerView recyclerView;
+    private PlayerAdapter playerAdapter;
+
     private final String url = "http://10.0.2.2:8000/";
 
     public PlayersFragment() {
@@ -83,20 +86,19 @@ public class PlayersFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_players, container, false);
 
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         playersList = new ArrayList<>();
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        playerAdapter = new PlayerAdapter(playersList);
+        recyclerView.setAdapter(playerAdapter);
 
-        fillList();
-
-        PlayerAdapter adapter = new PlayerAdapter(playersList);
-
-
+        retrievePlayerData();
 
         return view;
     }
 
-    private void fillList(){
+    private void retrievePlayerData(){
 
         JsonArrayRequest request = new JsonArrayRequest( // Cargamos el JsonArrayRequest e instanciamos el Adapter y el Holder
                 Request.Method.GET,
@@ -105,16 +107,17 @@ public class PlayersFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
+                        try{
+                            for (int i = 0; i < response.length(); i++) {
                                 JSONObject player = response.getJSONObject(i);
                                 Player data = new Player(player);
                                 playersList.add(data);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            }
+                            playerAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
-                }
                 },
                 new Response.ErrorListener() {
                     @Override
