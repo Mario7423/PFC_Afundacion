@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.app.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,9 @@ public class PlayerDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ImageView imageView;
+    private TextView name, age, position, number, nickname, nationality, team;
 
     public PlayerDetailFragment() {
         // Required empty public constructor
@@ -60,7 +66,35 @@ public class PlayerDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_player_detail, container, false);
+
+       View view =  inflater.inflate(R.layout.fragment_player_detail, container, false);
+
+       imageView = view.findViewById(R.id.image);
+       name = view.findViewById(R.id.name);
+       age = view.findViewById(R.id.age);
+       team = view.findViewById(R.id.team);
+       nationality = view.findViewById(R.id.nationality);
+       position = view.findViewById(R.id.position);
+       number = view.findViewById(R.id.number);
+       nickname = view.findViewById(R.id.nickname);
+
+       Bundle args = getArguments();
+
+       if(args != null && args.containsKey("player")){
+
+           Player player = (Player) args.getSerializable("player");
+
+           Picasso.get().load(player.getImage()).into(imageView);
+           name.setText(player.getName());
+           age.setText(String.valueOf(player.getAge()));
+           team.setText(player.getTeam());
+           nationality.setText(player.getNationality());
+           position.setText(player.getPosition());
+           number.setText(String.valueOf(player.getNumber()));
+           nickname.setText(player.getNickname());
+
+       }
+
+       return view;
     }
 }

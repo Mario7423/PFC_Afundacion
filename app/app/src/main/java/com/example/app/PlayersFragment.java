@@ -3,9 +3,12 @@ package com.example.app;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.RecyclerView.Player;
 import com.example.app.RecyclerView.PlayerAdapter;
+import com.example.app.RecyclerView.PlayerDetailFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,6 +98,24 @@ public class PlayersFragment extends Fragment {
         recyclerView.setAdapter(playerAdapter);
 
         retrievePlayerData();
+
+        playerAdapter.setItemClickListener(new PlayerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Player player) {
+
+                PlayerDetailFragment playerDetailFragment = new PlayerDetailFragment();
+                Bundle args = new Bundle();
+                args.putSerializable("player", player);
+                playerDetailFragment.setArguments(args);
+
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container, playerDetailFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+            }
+        });
 
         return view;
     }

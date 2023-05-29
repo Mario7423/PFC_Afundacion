@@ -3,7 +3,9 @@ package com.example.app.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     private String name, nickname, image, position, team, nationality;
     private int age, number;
