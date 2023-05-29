@@ -110,6 +110,7 @@ def addHint(request):
     return JsonResponse({'created new hint': True}, status=201)
 
 
+
 @csrf_exempt
 def getHints(request):
     if request.method != 'GET':
@@ -120,6 +121,18 @@ def getHints(request):
     response = []
 
     for row in rows:
-        response.append(row.to_json())
+        response.append(row.hint_to_json())
 
     return JsonResponse(response,safe=False, status=201)
+
+@csrf_exempt
+def getPlayers(request):
+    if request.method != 'GET':
+        return JsonResponse({'error': 'HTTP method not supported'}, status=405)
+
+    rows = Player.objects.order_by('name')
+    jsonArray = []
+    for row in rows:
+        jsonArray.append(row.player_to_json())
+    return JsonResponse(jsonArray, safe=False, status=200)
+

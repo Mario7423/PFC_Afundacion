@@ -18,6 +18,18 @@ class Player(models.Model):
     nickname = models.CharField(max_length=30, default='Sin apodo')
     position = models.CharField(max_length=20, default='Centrocampista')
 
+    def player_to_json(self):
+        return {
+            "name": self.name,
+            "age": self.age,
+            "number": self.number,
+            "image": self.image,
+            "team": self.team,
+            "nationality": self.nationality,
+            "nickname": self.nickname,
+            "position": self.position
+        }
+
 
 class Hints(models.Model):
     hint1 = models.CharField(max_length=80)
@@ -27,7 +39,7 @@ class Hints(models.Model):
     hint5 = models.CharField(max_length=80)
     solution = models.CharField(max_length=80)
 
-    def to_json(self):
+    def hint_to_json(self):
         return {
             "hint1": self.hint1,
             "hint2": self.hint2,
@@ -36,4 +48,5 @@ class Hints(models.Model):
             "hint5": self.hint5,
             "solution": self.solution
         }
+
 

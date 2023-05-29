@@ -3,10 +3,33 @@ package com.example.app;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.app.RecyclerView.Player;
+import com.example.app.RecyclerView.PlayerAdapter;
+import com.example.app.RecyclerView.PlayerDetailFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +46,12 @@ public class PlayersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private List<Player> playersList;
+    private RecyclerView recyclerView;
+    private PlayerAdapter playerAdapter;
+
+    private final String url = "http://10.0.2.2:8000/";
 
     public PlayersFragment() {
         // Required empty public constructor
@@ -58,7 +87,77 @@ public class PlayersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_players, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_players, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        playersList = new ArrayList<>();
+        playerAdapter = new PlayerAdapter(playersList);
+        recyclerView.setAdapter(playerAdapter);
+
+        retrievePlayerData();
+
+        playerAdapter.setItemClickListener(new PlayerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Player player) {
+
+                PlayerDetailFragment playerDetailFragment = new PlayerDetailFragment();
+                Bundle args = new Bundle();
+                args.putSerializable("player", player);
+                playerDetailFragment.setArguments(args);
+
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container, playerDetailFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+            }
+        });
+
+        return view;
+    }
+
+    private void retrievePlayerData(){
+
+        JsonArrayRequest request = new JsonArrayRequest( // Cargamos el JsonArrayRequest e instanciamos el Adapter y el Holder
+                Request.Method.GET,
+                url+"v1/getPlayers",
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try{
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject player = response.getJSONObject(i);
+                                Player data = new Player(player);
+                                playersList.add(data);
+                            }
+                            playerAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) { //Toast para un posible error
+                        if(error.networkResponse == null){
+
+                            Toast.makeText(getContext(), "Error de conexión con el servidor", Toast.LENGTH_LONG).show();
+
+                        }else{
+
+                            int serverResponse = error.networkResponse.statusCode;
+                            Toast.makeText(getContext(), "Estado de respuesta: "+ serverResponse, Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+        RequestQueue cola = Volley.newRequestQueue(getContext());
+        cola.add(request);
+
     }
 }
