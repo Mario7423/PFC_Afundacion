@@ -26,4 +26,6 @@ urlpatterns = [
     path('v1/addHint', endpoints.addHint),
     path('v1/getHints', endpoints.getHints),
     path('v1/getPlayers', endpoints.getPlayers),
+    path('v1/addNew', endpoints.addNew),
+    path('v1/getNews', endpoints.getNews),
 ]

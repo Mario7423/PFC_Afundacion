@@ -50,3 +50,18 @@ class Hints(models.Model):
         }
 
 
+class News(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.CharField(blank=True, null=True, max_length=200)
+    date = models.DateField()
+    text = models.CharField(max_length=300)
+
+    def new_to_json(self):
+        return {
+            "title": self.title,
+            "image": self.image,
+            "date": self.date,
+            "text": self.text
+        }
+
+
