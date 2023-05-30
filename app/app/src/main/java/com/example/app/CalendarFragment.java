@@ -2,11 +2,25 @@ package com.example.app;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +37,12 @@ public class CalendarFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private CalendarView calendarView;
+
+    private List<Matches> matchesList;
+
+    private final String url = "http://10.0.2.2:8000/";
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -58,7 +78,97 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false);
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        calendarView = view.findViewById(R.id.calendarView);
+
+        getFootBallMatches();
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+
+                String date = year+"-"+month+"-"+dayOfMonth;
+                Matches match = searchGame(date);
+
+                if(match != null){
+
+                    String message = "Local: " +match.getHome()+ " - Visitante: "+match.getVisiting();
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+
+                }else{
+
+                    Toast.makeText(getActivity(), "Hoy no hay partido", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        });
+
+        return view;
     }
+
+
+    private void getFootBallMatches(){
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url + "/getGames",
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject object = response.getJSONObject(i);
+                                Matches match = new Matches(object);
+                                matchesList.add(match);
+
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        if(error.networkResponse == null){
+
+                            Toast.makeText(getContext(), "Error de conexión con el servidor", Toast.LENGTH_LONG).show();
+
+                        }else{
+
+                            int serverResponse = error.networkResponse.statusCode;
+                            Toast.makeText(getContext(), "Estado de respuesta: "+ serverResponse, Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                }
+
+        );
+
+    }
+
+    private Matches searchGame(String date){
+
+        for(Matches match : matchesList){
+
+            if(match.getDate().equals(date)){
+
+                return match;
+
+            }
+
+        }
+
+        return null;
+
+    }
+
 }
