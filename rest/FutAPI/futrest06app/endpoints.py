@@ -4,7 +4,7 @@ import secrets
 import bcrypt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import User, Player, Hints, News
+from .models import User, Player, Hints, News, Game
 from django.db import IntegrityError
 
 
@@ -128,10 +128,30 @@ def addNew(request):
     new_new.save()
     return JsonResponse({'created new player': True}, status=201)
 
+
+@csrf_exempt
+def addGame(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'HTTP method not supported'}, status=405)
+
+    body = json.loads(request.body)
+    home = body.get('home')
+    visiting = body.get('visiting')
+    date = body.get('date')
+    hour = body.get('hour')
+
+    if home is None or visiting is None or date is None or hour is None:
+        return JsonResponse({'error': 'Missing parameter'}, status=400)
+
+    new_game = Game(home=home,visiting=visiting,date=date,hour=hour)
+    new_game.save()
+    return JsonResponse({'created new player': True}, status=201)
+
+
 @csrf_exempt
 def getHints(request):
     if request.method != 'GET':
-        return JsonResponse({'eror': 'HTTP method not supported'}, status=405)
+        return JsonResponse({'error': 'HTTP method not supported'}, status=405)
 
     rows = Hints.objects.all()
 
@@ -158,7 +178,7 @@ def getPlayers(request):
 @csrf_exempt
 def getNews(request):
     if request.method != 'GET':
-        return JsonResponse({'eror': 'HTTP method not supported'}, status=405)
+        return JsonResponse({'error': 'HTTP method not supported'}, status=405)
 
     rows = News.objects.all()
 
@@ -166,6 +186,21 @@ def getNews(request):
 
     for row in rows:
         response.append(row.new_to_json())
+
+    return JsonResponse(response, safe=False, status=201)
+
+
+@csrf_exempt
+def getGames(request):
+    if request.method != 'GET':
+        return JsonResponse({'error': 'HTTP method not supported'}, status=405)
+
+    rows = Game.objects.all()
+
+    response = []
+
+    for row in rows:
+        response.append(row.game_to_json())
 
     return JsonResponse(response, safe=False, status=201)
 

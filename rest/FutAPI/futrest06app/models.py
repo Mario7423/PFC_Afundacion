@@ -65,3 +65,17 @@ class News(models.Model):
         }
 
 
+class Game(models.Model):
+    home = models.CharField(max_length=50)
+    visiting = models.CharField(max_length=50)
+    date = models.DateField()
+    hour = models.CharField(max_length=10)
+
+    def game_to_json(self):
+        return{
+            "home": self.home,
+            "visiting": self.visiting,
+            "date": self.date,
+            "hour": self.hour
+        }
+
