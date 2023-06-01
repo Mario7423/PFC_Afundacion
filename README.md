@@ -14,7 +14,7 @@
   <p> FutAPP es una aplicación móvil orientada para aquellos amantes del fútbol que no quieren perderse las últimas novedades del mundillo.<br> Permitirá al usuario revisar las últimas noticias y fichajes, entretenerse con juegos de adivinanzas, comprobar los jugadores top, no perderse ningún partido, entre otras funciones. :smirk: <br><br>:label: Versión 1.0.0 </p>
 
   <h2 id="autor">Autor</h2>
-  <p></p>
+  <p><img src="https://avatars.githubusercontent.com/u/113417706?v=4" width=115><br><sub><a href="https://github.com/Mario7423">Mario7423</a></sub></p>
 
   
 </body>
