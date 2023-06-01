@@ -5,21 +5,27 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +46,11 @@ public class CalendarFragment extends Fragment {
     private String mParam2;
 
     private CalendarView calendarView;
+    private ProgressBar progressBar;
 
     private List<Matches> matchesList;
+
+    private RequestQueue queue;
 
     private final String url = "http://10.0.2.2:8000/";
 
@@ -74,6 +83,8 @@ public class CalendarFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        queue = Volley.newRequestQueue(getContext());
     }
 
     @Override
@@ -82,6 +93,7 @@ public class CalendarFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         calendarView = view.findViewById(R.id.calendarView);
+        progressBar = view.findViewById(R.id.progressBar);
 
         matchesList = new ArrayList<>();
         getFootBallMatches();
@@ -90,12 +102,13 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-                String date = year+"-"+month+"-"+dayOfMonth;
-                Matches match = searchGame(date);
+                LocalDate calendarDate = LocalDate.of(year, month+1, dayOfMonth);
+
+                Matches match = searchGame(calendarDate);
 
                 if(match != null){
 
-                    String message = "Local: " +match.getHome()+ " - Visitante: "+match.getVisiting();
+                    String message = "Local: " +match.getHome()+ " - Visitante: "+match.getVisiting()+" - "+match.getHour();
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
 
                 }else{
@@ -113,9 +126,12 @@ public class CalendarFragment extends Fragment {
 
     private void getFootBallMatches(){
 
+        calendarView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
-                url + "/getGames",
+                url + "v1/getGames",
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -129,6 +145,16 @@ public class CalendarFragment extends Fragment {
                                 matchesList.add(match);
 
                             }
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Ocultar el ProgressBar y mostrar el CalendarView
+                                    progressBar.setVisibility(View.GONE);
+                                    calendarView.setVisibility(View.VISIBLE);
+                                }
+                            }, 3000);
+
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
@@ -155,13 +181,20 @@ public class CalendarFragment extends Fragment {
 
         );
 
+        queue.add(request);
+
     }
 
-    private Matches searchGame(String date){
+    private Matches searchGame(LocalDate date){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate gameDate;
 
         for(Matches match : matchesList){
 
-            if(match.getDate().equals(date)){
+            gameDate = LocalDate.parse(match.getDate(), formatter);
+
+            if(gameDate.isEqual(date)){
 
                 return match;
 

@@ -5,13 +5,14 @@ import org.json.JSONObject;
 
 public class Matches {
 
-    private String home, visiting, date;
+    private String home, visiting, date, hour;
 
     public Matches(JSONObject object) throws JSONException {
 
-        home = object.getString("home");
-        visiting = object.getString("visiting");
-        date = object.getString("date");
+        this.home = object.getString("home");
+        this.visiting = object.getString("visiting");
+        this.date = object.getString("date");
+        this.hour = object.getString("hour");
 
     }
 
@@ -37,5 +38,13 @@ public class Matches {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 }

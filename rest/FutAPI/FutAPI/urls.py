@@ -28,4 +28,6 @@ urlpatterns = [
     path('v1/getPlayers', endpoints.getPlayers),
     path('v1/addNew', endpoints.addNew),
     path('v1/getNews', endpoints.getNews),
+    path('v1/addGame', endpoints.addGame),
+    path('v1/getGames', endpoints.getGames),
 ]
