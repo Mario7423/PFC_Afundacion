@@ -149,11 +149,11 @@ public class CalendarFragment extends Fragment {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // Ocultar el ProgressBar y mostrar el CalendarView
+
                                     progressBar.setVisibility(View.GONE);
                                     calendarView.setVisibility(View.VISIBLE);
                                 }
-                            }, 3000);
+                            }, 2000);
 
                         }catch (JSONException e){
                             e.printStackTrace();
