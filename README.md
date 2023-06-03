@@ -6,15 +6,21 @@
   <h1>Índice</h1>
   <ul>
     <li><a href="#descripcion">Descripción del proyecto</a></li>
+    <li><a href="#funciones">Funcionalidades del proyecto</a></li>
     <li><a href="#autor">Autor</a></li>
-    <li><a href="#seccion3">Sección 3</a></li>
   </ul>
 
   <h2 id="descripcion">:clapper: Descripción del proyecto</h2>
-  <p> FutAPP es una aplicación móvil orientada para aquellos amantes del fútbol que no quieren perderse las últimas novedades del mundillo.<br> Permitirá al usuario revisar las últimas noticias y fichajes, entretenerse con juegos de adivinanzas, comprobar los jugadores top, no perderse ningún partido, entre otras funciones. :smirk: <br><br>:label: Versión 1.0.0 </p>
+  <p> FutAPP es una aplicación móvil orientada para aquellos amantes del fútbol que no quieren perderse las últimas novedades del mundillo.<br> Permitirá al usuario revisar las últimas noticias y fichajes, entretenerse con juegos de adivinanzas, comprobar los jugadores top y no perderse ningún partido, entre otras funciones. :smirk: <br><br>:label: Versión 1.0.0 </p>
+  
+   <h2 id="funciones">:wrench:Funcionalidades del proyecto</h2>
+  <h3>Registro de usuario</h3>
+  <p>Permite al usuario registrarse en la aplicación a través de su email, contraseña y nombre de usuario, para crear una cuenta propia</p>
 
   <h2 id="autor">Autor</h2>
   <p><img src="https://avatars.githubusercontent.com/u/113417706?v=4" width=115><br><sub><a href="https://github.com/Mario7423">Mario7423</a></sub></p>
+  
+    
 
   
 </body>
