@@ -126,7 +126,7 @@ def addNew(request):
 
     new_new = News(title=title,image=image,date=date,text=text)
     new_new.save()
-    return JsonResponse({'created new player': True}, status=201)
+    return JsonResponse({'created new new': True}, status=201)
 
 
 @csrf_exempt
