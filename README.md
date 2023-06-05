@@ -33,6 +33,7 @@
     <li>Android Studio</li>
     <li>Django</li>
     <li>Java</li>
+    <li>Python</li>
   </ul>
     
 
