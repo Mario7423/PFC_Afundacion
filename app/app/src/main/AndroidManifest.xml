@@ -19,7 +19,7 @@
             android:name=".AddPlayerScreen"
             android:exported="false" />
         <activity
-            android:name=".AddNewScreen"
+            android:name=".FirstScreen"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -71,7 +71,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".FirstScreen"
+            android:name=".AddNewScreen"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
