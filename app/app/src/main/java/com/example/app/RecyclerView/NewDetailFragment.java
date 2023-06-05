@@ -69,18 +69,18 @@ public class NewDetailFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_new_detail, container, false);
 
-        imageView = view.findViewById(R.id.image);
+        imageView = view.findViewById(R.id.image);  // Instanciado de los elementos del xml para poder cambiar su contendio
         title = view.findViewById(R.id.title);
         date = view.findViewById(R.id.date);
         text = view.findViewById(R.id.text);
 
-        Bundle args = getArguments();
+        Bundle args = getArguments();  // Recuperación de la información proporcionada por HomeFragment, que contiene los datos de un jugador específico
 
         if(args != null && args.containsKey("news")){
 
             New news = (New) args.getSerializable("news");
 
-            Picasso.get().load(news.getImage()).into(imageView);
+            Picasso.get().load(news.getImage()).into(imageView);  // Cargado de los datos en los TextView y la imagen en el ImageView gracias a Picasso
             title.setText(news.getTitle());
             date.setText(news.getDate());
             text.setText(news.getText());

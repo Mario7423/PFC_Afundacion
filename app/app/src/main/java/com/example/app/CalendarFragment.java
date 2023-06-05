@@ -98,20 +98,20 @@ public class CalendarFragment extends Fragment {
         matchesList = new ArrayList<>();
         getFootBallMatches();
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {  // Detecta qué día ha pulsado el usuario
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-                LocalDate calendarDate = LocalDate.of(year, month+1, dayOfMonth);
+                LocalDate calendarDate = LocalDate.of(year, month+1, dayOfMonth);  // Creación de un objeto LocalDate de la fecha que ha pulsado
 
-                Matches match = searchGame(calendarDate);
+                Matches match = searchGame(calendarDate);  // Búsqueda de un partido que tenga esa fecha
 
-                if(match != null){
+                if(match != null){  // Si existe un partido, muestra los detalles
 
                     String message = "Local: " +match.getHome()+ " - Visitante: "+match.getVisiting()+" - "+match.getHour();
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
 
-                }else{
+                }else{  // Muestra un Toast que indica que no hay partido
 
                     Toast.makeText(getActivity(), "Hoy no hay partido", Toast.LENGTH_LONG).show();
 
@@ -124,9 +124,9 @@ public class CalendarFragment extends Fragment {
     }
 
 
-    private void getFootBallMatches(){
+    private void getFootBallMatches(){  // Método que lanza una petición para obtener los partidos
 
-        calendarView.setVisibility(View.GONE);
+        calendarView.setVisibility(View.GONE);  // Muestra la ProgressBar y oculta el Calendario
         progressBar.setVisibility(View.VISIBLE);
 
         JsonArrayRequest request = new JsonArrayRequest(
@@ -141,12 +141,12 @@ public class CalendarFragment extends Fragment {
                             for (int i = 0; i < response.length(); i++) {
 
                                 JSONObject object = response.getJSONObject(i);
-                                Matches match = new Matches(object);
+                                Matches match = new Matches(object);  // Instancia de Matches para añadirlo en la lista
                                 matchesList.add(match);
 
                             }
 
-                            new Handler().postDelayed(new Runnable() {
+                            new Handler().postDelayed(new Runnable() {  // Después de 2 segundos, oculta la ProgressBar y muestra el Calendario
                                 @Override
                                 public void run() {
 
@@ -163,7 +163,7 @@ public class CalendarFragment extends Fragment {
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error) {  // Detalla el error de la petición
 
                         if(error.networkResponse == null){
 
@@ -185,16 +185,16 @@ public class CalendarFragment extends Fragment {
 
     }
 
-    private Matches searchGame(LocalDate date){
+    private Matches searchGame(LocalDate date){  // Método que comprueba que existe un partido en la fecha que se pasa como argumento
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate gameDate;
 
         for(Matches match : matchesList){
 
-            gameDate = LocalDate.parse(match.getDate(), formatter);
+            gameDate = LocalDate.parse(match.getDate(), formatter);  // Crea un objeto LocalDate según la fecha del partido y el formatter
 
-            if(gameDate.isEqual(date)){
+            if(gameDate.isEqual(date)){  // Método que comprueba si la fecha pasada y la del partido son iguales
 
                 return match;
 

@@ -38,9 +38,9 @@ public class AddNewScreen extends AppCompatActivity {
         text = findViewById(R.id.text);
         button = findViewById(R.id.button);
 
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);  // Instancia de la RequestQueue
 
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {  // Detección del click en el botón
             @Override
             public void onClick(View v) {
 
@@ -50,11 +50,11 @@ public class AddNewScreen extends AppCompatActivity {
         });
     }
 
-    private void addHint(){
+    private void addHint(){  // Método que lanza la petición
 
         JSONObject object = new JSONObject();
 
-        try {
+        try {  // Llenado del JSONObject que se va a enviar en la petición
 
             object.put("title", title.getText().toString());
             object.put("image", image.getText().toString());
@@ -71,7 +71,7 @@ public class AddNewScreen extends AppCompatActivity {
                 object,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONObject response) { // Muestra un Toast para saber que todo a salido como se esperaba
 
                         Toast.makeText(context, "New añadida con éxito", Toast.LENGTH_SHORT).show();
 
@@ -79,7 +79,7 @@ public class AddNewScreen extends AppCompatActivity {
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error) {  // Detalla el error de la petición
 
                         if(error.networkResponse == null){
 

@@ -24,20 +24,18 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        SharedPreferences preferences = getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);  // Instancia de la Toolbar personalizada
         setSupportActionBar(toolbar);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);  // Instancia del Layout
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this); // ClickListener para el NavigationView
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
-        drawerLayout.addDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);  // Usamos la toolbar
         toggle.syncState();
 
-        if(savedInstanceState == null){
+        if(savedInstanceState == null){  // Cargado del fragment de noticias si es la primera vez
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
@@ -47,7 +45,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {  // Según lo que se pulse en el menú del NavigationView, se iniciará un Fragment diferente
         switch (item.getItemId()){
 
             case R.id.nav_home:
@@ -66,7 +64,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GuessPlayerFragment()).commit();
                 break;
 
-            case R.id.nav_logout:
+            case R.id.nav_logout:  // En este caso, se borra las SharedPreferences y se retorna a la pantalla de inicio para cerrar la sesión
                 SharedPreferences.Editor editor = getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE).edit();
                 editor.clear().apply();
                 finish();
@@ -81,7 +79,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {  // Controla el evento de retroceso
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
 
             drawerLayout.closeDrawer(GravityCompat.START);

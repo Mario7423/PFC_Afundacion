@@ -91,24 +91,24 @@ public class PlayersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_players, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  // Instanciamos el RecyclerView
 
         playersList = new ArrayList<>();
-        playerAdapter = new PlayerAdapter(playersList);
-        recyclerView.setAdapter(playerAdapter);
+        playerAdapter = new PlayerAdapter(playersList); // Instancia del Adapter y se envía la lista de jugadores
+        recyclerView.setAdapter(playerAdapter); // Añadimos el adapter como adaptador del RecyclerView
 
-        retrievePlayerData();
+        retrievePlayerData();  // Recuperación de los jugadores
 
-        playerAdapter.setItemClickListener(new PlayerAdapter.OnItemClickListener() {
+        playerAdapter.setItemClickListener(new PlayerAdapter.OnItemClickListener() { // Detección de clicks para poder cargar el fragment de detalles
             @Override
             public void onItemClick(Player player) {
 
                 PlayerDetailFragment playerDetailFragment = new PlayerDetailFragment();
                 Bundle args = new Bundle();
                 args.putSerializable("player", player);
-                playerDetailFragment.setArguments(args);
+                playerDetailFragment.setArguments(args);  // Cargado de los datos del jugador en el Bundle para enviarlos a DetailFragment
 
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager(); // Reemplazado por PlayerDetailFragment
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.fragment_container, playerDetailFragment);
                 transaction.addToBackStack(null);
@@ -120,9 +120,9 @@ public class PlayersFragment extends Fragment {
         return view;
     }
 
-    private void retrievePlayerData(){
+    private void retrievePlayerData(){ // Método que lanza una petición
 
-        JsonArrayRequest request = new JsonArrayRequest( // Cargamos el JsonArrayRequest e instanciamos el Adapter y el Holder
+        JsonArrayRequest request = new JsonArrayRequest( // Cargamos el JsonArrayRequest
                 Request.Method.GET,
                 url+"v1/getPlayers",
                 null,
@@ -132,7 +132,7 @@ public class PlayersFragment extends Fragment {
                         try{
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject player = response.getJSONObject(i);
-                                Player data = new Player(player);
+                                Player data = new Player(player);  // Instanciamos un nuevo Player y lo introducimos en la lista
                                 playersList.add(data);
                             }
                             playerAdapter.notifyDataSetChanged();

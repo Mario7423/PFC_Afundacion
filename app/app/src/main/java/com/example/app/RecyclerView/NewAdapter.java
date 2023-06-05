@@ -19,7 +19,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.NewViewHolder> {
     private List<New> newsList;
     private NewAdapter.OnItemClickListener itemClickListener;
 
-    public NewAdapter(List<New> newsList){
+    public NewAdapter(List<New> newsList){ // Método constructor que recibe una lista de noticias
 
         this.newsList = newsList;
 
@@ -27,18 +27,18 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.NewViewHolder> {
 
     @NonNull
     @Override
-    public NewAdapter.NewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NewAdapter.NewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { // Creada y devuelta instancia del ViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_list,null,false);
         return  new NewAdapter.NewViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewAdapter.NewViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewAdapter.NewViewHolder holder, int position) {  // Vincula los datos de cada noticia al ViewHolder, según la posición.
 
         New news = newsList.get(position);
         holder.bind(news);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() { //Permite detectar clicks del usuario en el RecyclerView
             @Override
             public void onClick(View v) {
                 if(itemClickListener != null){
@@ -52,13 +52,13 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.NewViewHolder> {
     @Override
     public int getItemCount() {
         return newsList.size();
-    }
+    } // Devuelve el tamaño de la lista de noticias
 
     public void setItemClickListener(NewAdapter.OnItemClickListener listener){
         this.itemClickListener = listener;
     }
 
-    public class NewViewHolder extends RecyclerView.ViewHolder{
+    public class NewViewHolder extends RecyclerView.ViewHolder{  // Clase interna tipo ViewHolder que representa cada elemento del Recycler View con referencias a new_list
 
         TextView textView;
         ImageView imageView;
@@ -80,7 +80,7 @@ public class NewAdapter extends RecyclerView.Adapter<NewAdapter.NewViewHolder> {
 
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener{  // Interfaz usada para la detección de clicks
 
         void onItemClick(New news);
 

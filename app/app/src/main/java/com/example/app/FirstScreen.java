@@ -26,10 +26,10 @@ public class FirstScreen extends AppCompatActivity {
         login = findViewById(R.id.login); // Instanciamos los botones para poder trabajar sobre ellos
         register = findViewById(R.id.register);
 
-        SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);  // Obtenemos las SharedPreferences para comprobar si ya hay una sesión iniciada
         String token = preferences.getString("VALID_TOKEN", "");
 
-        if(!token.isEmpty()){
+        if(!token.isEmpty()){ // Si ya existe un Token de sesión, se va directamente a la pantalla principal
 
             Intent intent = new Intent(context, MainScreen.class);
             startActivity(intent);
@@ -47,7 +47,7 @@ public class FirstScreen extends AppCompatActivity {
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {  // Inicia la pantalla de registro
             @Override
             public void onClick(View v) {
 

@@ -7,7 +7,7 @@ public class Matches {
 
     private String home, visiting, date, hour;
 
-    public Matches(JSONObject object) throws JSONException {
+    public Matches(JSONObject object) throws JSONException {  // Constructor que recibe un JSONObject para instanciar un nuevo Partido
 
         this.home = object.getString("home");
         this.visiting = object.getString("visiting");

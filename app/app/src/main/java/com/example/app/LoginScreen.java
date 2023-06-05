@@ -47,21 +47,21 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!email.getText().toString().contains("@") || email.getText().toString().isEmpty()){
+                if(!email.getText().toString().contains("@") || email.getText().toString().isEmpty()){  // Comprobación de email
 
                     goodEmail = false;
                     email.setError("Email no válido");
 
                 }
 
-                if(password.getText().toString().isEmpty()){
+                if(password.getText().toString().isEmpty()){  // Comprobación de la contraseña
 
                     goodPassword = false;
                     password.setError("Este campo es obligatorio");
 
                 }
 
-                if(goodPassword && goodEmail){
+                if(goodPassword && goodEmail){  // Si ambos son correctos, se lanza la petición
 
                     loginUser();
 
@@ -71,11 +71,11 @@ public class LoginScreen extends AppCompatActivity {
         });
     }
 
-    private void loginUser(){
+    private void loginUser(){ // Método que lanza la petición
 
         JSONObject object = new JSONObject();
 
-        try {
+        try {  // Formado de JSONObject con la información introducida por el usuario
 
             object.put("email", email.getText().toString());
             object.put("password", password.getText().toString());
@@ -90,7 +90,7 @@ public class LoginScreen extends AppCompatActivity {
                 object,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONObject response) {  // Si ha ido bien, se recibe el email y el token de sesión
 
                         String receivedToken, receivedEmail;
                         try {
@@ -100,18 +100,18 @@ public class LoginScreen extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
                         Toast.makeText(context, "Token: " + receivedToken, Toast.LENGTH_SHORT).show();
-                        SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
+                        SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);  // Se cargan las SharedPreferences para guardar el email y el token de sesión
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("VALID_EMAIL", receivedEmail);
                         editor.putString("VALID_TOKEN", receivedToken);
                         editor.commit();
-                        Intent intent = new Intent(context, MainScreen.class);
+                        Intent intent = new Intent(context, MainScreen.class);  // Se carga la pantalla principal
                         startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error) {  // Detalla el error en la petición
 
                         if (error.networkResponse == null) {
                             Toast.makeText(context, "Error al conectar con el servidor",Toast.LENGTH_LONG).show();

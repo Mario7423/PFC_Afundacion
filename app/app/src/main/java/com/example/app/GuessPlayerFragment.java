@@ -87,7 +87,7 @@ public class GuessPlayerFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        queue = Volley.newRequestQueue(getContext());
+        queue = Volley.newRequestQueue(getContext());  // Instancia de una nueva RequestQueue
     }
 
     @Override
@@ -105,17 +105,17 @@ public class GuessPlayerFragment extends Fragment {
         validate = view.findViewById(R.id.validate);
         reload = view.findViewById(R.id.reload);
 
-        first.setVisibility(View.GONE);
+        first.setVisibility(View.GONE);  // Oculta los TextView para mostrarlos poco a poco según los fallos
         second.setVisibility(View.GONE);
         third.setVisibility(View.GONE);
         fourth.setVisibility(View.GONE);
         fifth.setVisibility(View.GONE);
 
-        validate.setOnClickListener(new View.OnClickListener() {
+        validate.setOnClickListener(new View.OnClickListener() {  // Detecta los clicks del botón para validar la respuesta
             @Override
             public void onClick(View v) {
 
-                if(editText.getText().toString().equalsIgnoreCase(solution)){
+                if(editText.getText().toString().equalsIgnoreCase(solution)){  // Comprueba si ha acertado el jugador oculto
 
                     editText.setText("HAS GANADO!!!");
                     editText.setEnabled(false);
@@ -123,7 +123,7 @@ public class GuessPlayerFragment extends Fragment {
                 }else{
 
                     tries++;
-                    switch (tries){
+                    switch (tries){   // Según el número de fallos, muestra más pistas
 
                         case 1:
 
@@ -153,7 +153,7 @@ public class GuessPlayerFragment extends Fragment {
             }
         });
 
-        reload.setOnClickListener(new View.OnClickListener() {
+        reload.setOnClickListener(new View.OnClickListener() {  // Detección de clicks que permite recargar el juego
             @Override
             public void onClick(View v) {
 
@@ -165,7 +165,7 @@ public class GuessPlayerFragment extends Fragment {
         return view;
     }
 
-    private void getDataForGame(){
+    private void getDataForGame(){  // Método que lanza una petición
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
@@ -176,13 +176,13 @@ public class GuessPlayerFragment extends Fragment {
                     public void onResponse(JSONArray response) {
 
                         Random random = new Random();
-                        int aleatorio = random.nextInt(response.length());
+                        int aleatorio = random.nextInt(response.length());  // Genera un número aleatorio para coger un juego cualquiera dentro de la respuesta
 
                         try {
 
                             JSONObject jsonObject = response.getJSONObject(aleatorio);
 
-                            first.setText(jsonObject.get("hint1").toString());
+                            first.setText(jsonObject.get("hint1").toString());  // Carga los datos en los TextView para poder empezar el juego
                             second.setText(jsonObject.get("hint2").toString());
                             third.setText(jsonObject.get("hint3").toString());
                             fourth.setText(jsonObject.get("hint4").toString());
@@ -190,7 +190,7 @@ public class GuessPlayerFragment extends Fragment {
                             solution = jsonObject.get("solution").toString();
 
                             tries = 0;
-                            editText.setEnabled(true);
+                            editText.setEnabled(true);  // Comprobamos que los fallos y los TextView están preparados para volver a empezar el juego
                             editText.setText("");
 
                             first.setVisibility(View.VISIBLE);
@@ -207,7 +207,7 @@ public class GuessPlayerFragment extends Fragment {
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error) {  // Detalla cualquier fallo de la petición
 
                         if(error.networkResponse == null){
 

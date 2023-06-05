@@ -38,9 +38,9 @@ public class AddGameScreen extends AppCompatActivity {
         hour = findViewById(R.id.hour);
         button = findViewById(R.id.button);
 
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);  // Instanciado de RequestQueue para la petición
 
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {  // ClickListener del botón que permite lanzar el método que contiene la petición
             @Override
             public void onClick(View v) {
 
@@ -50,11 +50,11 @@ public class AddGameScreen extends AppCompatActivity {
         });
     }
 
-    private void addHint(){
+    private void addHint(){  // Método que lanza la petición
 
         JSONObject object = new JSONObject();
 
-        try {
+        try {  // LLenado del JSONObject para enviar en la petición
 
             object.put("home", home.getText().toString());
             object.put("visiting", visiting.getText().toString());
@@ -71,7 +71,7 @@ public class AddGameScreen extends AppCompatActivity {
                 object,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONObject response) {  // Si la petición es un éxito, muestra un Toast para saber que se ha añadido
 
                         Toast.makeText(context, "Game añadido con éxito", Toast.LENGTH_SHORT).show();
 
@@ -79,7 +79,7 @@ public class AddGameScreen extends AppCompatActivity {
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error) {  // En caso de error, dar una respuesta detallada
 
                         if(error.networkResponse == null){
 

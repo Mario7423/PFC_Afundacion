@@ -21,7 +21,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     private List<Player> playersList;
     private OnItemClickListener itemClickListener;
 
-    public PlayerAdapter(List<Player> playersList){
+    public PlayerAdapter(List<Player> playersList){ // Método constructor que recibe una lista de jugadores
 
         this.playersList = playersList;
 
@@ -29,18 +29,18 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     @NonNull
     @Override
-    public PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { // Creada y devuelta instancia del ViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_list,null,false);
         return  new PlayerViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) { // Vincula los datos de cada jugador al ViewHolder, según la posición
 
         Player player = playersList.get(position);
         holder.bind(player);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() { //Permite detectar clicks del usuario en el RecyclerView
             @Override
             public void onClick(View v) {
                 if(itemClickListener != null){
@@ -54,13 +54,13 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     @Override
     public int getItemCount() {
         return playersList.size();
-    }
+    } // Devuelve el tamaño de la lista de jugadores
 
     public void setItemClickListener(OnItemClickListener listener){
         this.itemClickListener = listener;
     }
 
-    public class PlayerViewHolder extends RecyclerView.ViewHolder{
+    public class PlayerViewHolder extends RecyclerView.ViewHolder{ // Clase interna tipo ViewHolder que representa cada elemento del Recycler View con referencias a player_list
 
         TextView textView;
         ImageView imageView;
@@ -82,7 +82,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
 
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener{  // Interfaz usada para la detección de clicks
 
         void onItemClick(Player player);
 

@@ -10,7 +10,7 @@ public class Player implements Serializable {
     private String name, nickname, image, position, team, nationality;
     private int age, number;
 
-    public Player(JSONObject object) throws JSONException{
+    public Player(JSONObject object) throws JSONException{  // Método constructor que recibe un JSONObject para formar un nuevo jugador
 
         this.name = object.getString("name");
         this.age = object.getInt("age");
@@ -25,7 +25,7 @@ public class Player implements Serializable {
 
     public String getName() {
         return name;
-    }
+    } // Getter & Setter
 
     public void setName(String name) {
         this.name = name;

@@ -34,7 +34,7 @@ public class RegisterScreen extends AppCompatActivity {
     private Context context = this;
     private RequestQueue requestQueue;
     private final String urlMockapi = "https://64623eb77a9eead6faca2f47.mockapi.io";
-    private final String url = "http://10.0.2.2:8000/"; //"http://127.0.0.1:8000/";
+    private final String url = "http://10.0.2.2:8000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +49,20 @@ public class RegisterScreen extends AppCompatActivity {
         textViewFromCV = findViewById(R.id.textViewFromCheckBox);
         button = findViewById(R.id.button);
 
-        requestQueue = Volley.newRequestQueue(this);
+        requestQueue = Volley.newRequestQueue(this);  // Instancia de una nueva RequestQueue
 
-        SpannableString underlinedText = new SpannableString(textViewFromCV.getText().toString());
+        SpannableString underlinedText = new SpannableString(textViewFromCV.getText().toString());  // Subrayado del TextView que acompaña la checkBox
         underlinedText.setSpan(new UnderlineSpan(), 0, underlinedText.length(), 0);
         textViewFromCV.setText(underlinedText);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {  // Detección de clicks
             @Override
             public void onClick(View view) {
 
                 String emailText = email.getText().toString(), passwordText = password.getText().toString(), nicknameText = nickname.getText().toString();
                 boolean goodEmail = true, goodPassword = true, goodNickname = true;
 
-                if(emailText.isEmpty()){
+                if(emailText.isEmpty()){  // Comprobamos que el email, la contraseña y el nombre de usuario son correctos
 
                     goodEmail = false;
                     email.setError("Este campo es obligatorio");
@@ -92,13 +92,13 @@ public class RegisterScreen extends AppCompatActivity {
 
                 }
 
-                if(!checkBox.isChecked()){
+                if(!checkBox.isChecked()){  // Comprobamos que la checkBox está marcada
 
                     checkBox.setError("Debes aceptar las políticas para poder avanzar");
 
                 }
 
-                if(goodEmail && goodPassword && goodNickname && checkBox.isChecked()){
+                if(goodEmail && goodPassword && goodNickname && checkBox.isChecked()){  // Si está bien , se llama al método que lanza la petición
 
                     //Toast.makeText(context, "Registro completado", Toast.LENGTH_LONG).show();
                     registeUser();
@@ -108,24 +108,13 @@ public class RegisterScreen extends AppCompatActivity {
             }
         });
 
-        textViewFromCV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-//                Intent intent = new Intent(context, PoliticsActivity.class);
-//                startActivity(intent);
-
-                Toast.makeText(context, "Esto muestra la pantalla de Políticas", Toast.LENGTH_LONG).show();
-
-            }
-        });
     }
 
-    private void registeUser(){
+    private void registeUser(){  // Método que lanza la petición
 
         JSONObject requestBody = new JSONObject();
 
-        try{
+        try{  // Formado del JSONObject para enviarlo en la petición
 
             requestBody.put("email", email.getText().toString());
             requestBody.put("password", password.getText().toString());
@@ -141,16 +130,14 @@ public class RegisterScreen extends AppCompatActivity {
                 requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONObject response) {  // Muestra un Toast si la cuenta se ha creado
 
                         Toast.makeText(context, "Registro realizado con éxito", Toast.LENGTH_LONG).show();
-//                      Intent intent = new Intent(context, MainScreen.class);
-//                      startActivity(intent);
 
                     }
                 }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onErrorResponse(VolleyError error) {  // Detalla el error de la petición
 
                 if(error.networkResponse == null){
 

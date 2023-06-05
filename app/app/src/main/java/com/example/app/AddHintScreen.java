@@ -40,9 +40,9 @@ public class AddHintScreen extends AppCompatActivity {
         solution = findViewById(R.id.solution);
         button = findViewById(R.id.button);
 
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);  // Instancia de la RequestQueue
 
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {  // Permite la detección de click en el botón
             @Override
             public void onClick(View v) {
 
@@ -52,11 +52,11 @@ public class AddHintScreen extends AppCompatActivity {
         });
     }
 
-    private void addHint(){
+    private void addHint(){  // Método que lanza la petición
 
         JSONObject object = new JSONObject();
 
-        try {
+        try {   // Llenado del JSONObject para enviar en la petición
 
             object.put("hint1", hint1.getText().toString());
             object.put("hint2", hint2.getText().toString());
@@ -75,7 +75,7 @@ public class AddHintScreen extends AppCompatActivity {
                 object,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONObject response) {  // Si se ha completado correctamente, muestra un Toast para conocer el resultado
 
                         Toast.makeText(context, "Hint añadido con éxito", Toast.LENGTH_SHORT).show();
 
@@ -83,7 +83,7 @@ public class AddHintScreen extends AppCompatActivity {
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error) {  // Muestra detalladamente el error de la petición
 
                         if(error.networkResponse == null){
 

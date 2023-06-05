@@ -42,9 +42,9 @@ public class AddPlayerScreen extends AppCompatActivity {
         position = findViewById(R.id.position);
         button = findViewById(R.id.button);
 
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);  // Nueva RequestQueue
 
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {  // Detección de click para el botón
             @Override
             public void onClick(View v) {
 
@@ -54,11 +54,11 @@ public class AddPlayerScreen extends AppCompatActivity {
         });
     }
 
-    private void addPlayer(){
+    private void addPlayer(){  // Método que lanza la petición
 
         JSONObject object = new JSONObject();
 
-        try {
+        try {  // Llenado del JSONObject que se envia en la petición
 
             object.put("name", name.getText().toString());
             object.put("age", age.getText().toString());
@@ -79,7 +79,7 @@ public class AddPlayerScreen extends AppCompatActivity {
                 object,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONObject response) {  // Muestra un Toast si todo ha salido bien
 
                         Toast.makeText(context, "Jugador añadido con éxito", Toast.LENGTH_SHORT).show();
 
@@ -87,7 +87,7 @@ public class AddPlayerScreen extends AppCompatActivity {
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error) {  // Detalla el error de la petición
 
                         if(error.networkResponse == null){
 

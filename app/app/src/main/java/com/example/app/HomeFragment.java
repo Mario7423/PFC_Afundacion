@@ -88,24 +88,24 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity())); // Instanciamos el RecyclerView
 
         newsList = new ArrayList<>();
-        newAdapter = new NewAdapter(newsList);
-        recyclerView.setAdapter(newAdapter);
+        newAdapter = new NewAdapter(newsList);  // Instancia del Adapter y se envía la lista de noticias
+        recyclerView.setAdapter(newAdapter);  // Añadimos el adapter como adaptador del RecyclerView
 
-        retrievePlayerData();
+        retrieveNewsData();  // Recuperación de las noticias
 
-        newAdapter.setItemClickListener(new NewAdapter.OnItemClickListener() {
+        newAdapter.setItemClickListener(new NewAdapter.OnItemClickListener() { // Detección de clicks para poder cargar el fragment de detalles
             @Override
             public void onItemClick(New news) {
 
                 NewDetailFragment newDetailFragment = new NewDetailFragment();
                 Bundle args = new Bundle();
                 args.putSerializable("news", news);
-                newDetailFragment.setArguments(args);
+                newDetailFragment.setArguments(args);  // Cargado de los datos de la noticia en el Bundle para enviarlos a DetailFragment
 
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();  // Reemplazado por NewDetailFragment
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.fragment_container, newDetailFragment);
                 transaction.addToBackStack(null);
@@ -117,9 +117,9 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void retrievePlayerData(){
+    private void retrieveNewsData(){ // Método que lanza una petición
 
-        JsonArrayRequest request = new JsonArrayRequest( // Cargamos el JsonArrayRequest e instanciamos el Adapter y el Holder
+        JsonArrayRequest request = new JsonArrayRequest( // Cargamos el JsonArrayRequest
                 Request.Method.GET,
                 url+"v1/getNews",
                 null,
@@ -128,7 +128,7 @@ public class HomeFragment extends Fragment {
                     public void onResponse(JSONArray response) {
                         try{
                             for (int i = 0; i < response.length(); i++) {
-                                JSONObject news = response.getJSONObject(i);
+                                JSONObject news = response.getJSONObject(i);  // Cargamos las noticas en la lista
                                 New data = new New(news);
                                 newsList.add(data);
                             }

@@ -69,7 +69,7 @@ public class PlayerDetailFragment extends Fragment {
 
        View view =  inflater.inflate(R.layout.fragment_player_detail, container, false);
 
-       imageView = view.findViewById(R.id.image);
+       imageView = view.findViewById(R.id.image);  // Instanciado de los elementos del xml para cambiar su contenido
        name = view.findViewById(R.id.name);
        age = view.findViewById(R.id.age);
        team = view.findViewById(R.id.team);
@@ -78,13 +78,13 @@ public class PlayerDetailFragment extends Fragment {
        number = view.findViewById(R.id.number);
        nickname = view.findViewById(R.id.nickname);
 
-       Bundle args = getArguments();
+       Bundle args = getArguments();  // Recuperación de los datos que vienen de PlayersFragment para poder cargarlos en los elementos.
 
        if(args != null && args.containsKey("player")){
 
            Player player = (Player) args.getSerializable("player");
 
-           Picasso.get().load(player.getImage()).into(imageView);
+           Picasso.get().load(player.getImage()).into(imageView);  // Librería picasso para cargar una imagen por la url de player.getImage
            name.setText(player.getName());
            age.setText(String.valueOf(player.getAge()));
            team.setText(player.getTeam());

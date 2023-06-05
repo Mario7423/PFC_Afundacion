@@ -9,7 +9,7 @@ public class New implements Serializable {
 
     private String title, image, date, text;
 
-    public New(JSONObject object) throws JSONException {
+    public New(JSONObject object) throws JSONException {  // Método constructor que recibe un JSONObject para formar una nueva noticia
 
         this.title = object.getString("title");
         this.image = object.getString("image");
@@ -20,7 +20,7 @@ public class New implements Serializable {
 
     public String getTitle() {
         return title;
-    }
+    }  // Getter & Setter
 
     public void setTitle(String title) {
         this.title = title;
