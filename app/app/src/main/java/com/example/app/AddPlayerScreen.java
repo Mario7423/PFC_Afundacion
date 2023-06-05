@@ -75,7 +75,7 @@ public class AddPlayerScreen extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                url+"v1/add",
+                url+"v1/addPlayer",
                 object,
                 new Response.Listener<JSONObject>() {
                     @Override
