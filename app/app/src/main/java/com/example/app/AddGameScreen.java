@@ -44,13 +44,13 @@ public class AddGameScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                addHint();
+                addGame();
 
             }
         });
     }
 
-    private void addHint(){  // Método que lanza la petición
+    private void addGame(){  // Método que lanza la petición
 
         JSONObject object = new JSONObject();
 
