@@ -24,10 +24,20 @@
         android:hint="Name"/>
 
     <TextView
-        android:id="@+id/age"
+        android:id="@+id/nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:hint="Nickname"/>
+
+    <TextView
+        android:id="@+id/age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/nickname"
         app:layout_constraintStart_toStartOf="parent"
         android:gravity="center"
         android:layout_marginTop="30dp"
@@ -63,21 +73,12 @@
         android:layout_marginTop="30dp"
         android:hint="Nationality"/>
 
-    <TextView
-        android:id="@+id/nickname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/nationality"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:hint="Nickname"/>
 
     <TextView
         android:id="@+id/position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/nickname"
+        app:layout_constraintTop_toBottomOf="@id/nationality"
         app:layout_constraintStart_toStartOf="parent"
         android:gravity="center"
         android:layout_marginTop="30dp"

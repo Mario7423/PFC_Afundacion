@@ -85,13 +85,13 @@ public class PlayerDetailFragment extends Fragment {
            Player player = (Player) args.getSerializable("player");
 
            Picasso.get().load(player.getImage()).into(imageView);  // Librería picasso para cargar una imagen por la url de player.getImage
-           name.setText(player.getName());
-           age.setText(String.valueOf(player.getAge()));
-           team.setText(player.getTeam());
-           nationality.setText(player.getNationality());
-           position.setText(player.getPosition());
-           number.setText(String.valueOf(player.getNumber()));
-           nickname.setText(player.getNickname());
+           name.setText("Nombre: " + player.getName());
+           age.setText("Edad: "+String.valueOf(player.getAge()));
+           team.setText("Equipo: "+player.getTeam());
+           nationality.setText("Nacionalidad: "+player.getNationality());
+           position.setText("Posición: "+player.getPosition());
+           number.setText("Dorsal: "+String.valueOf(player.getNumber()));
+           nickname.setText("Apodo: "+player.getNickname());
 
        }
 
